@@ -1,6 +1,4 @@
-﻿using TaskManager;
-
-class Program
+﻿class Program
 {
     private static readonly TaskManager.TaskManager _taskManager = new();
 
@@ -95,5 +93,8 @@ class Program
         Console.WriteLine("  add <description>            - Add a new task");
         Console.WriteLine("  list                         - List all tasks");
         Console.WriteLine("  list <status>                - List tasks by status (todo/in-progress/done)");
+        Console.WriteLine("\nExamples:");
+        Console.WriteLine("  dotnet run -- add \"Buy groceries\"");
+        Console.WriteLine("  dotnet run -- list");
     }
 }
