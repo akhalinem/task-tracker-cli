@@ -1,6 +1,8 @@
 using System.Text.Json;
 
-class TaskManager
+namespace TaskTracker;
+
+public class TaskManager
 {
     private readonly string _filePath;
     private readonly List<Task> _tasks = [];

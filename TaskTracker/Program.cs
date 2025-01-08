@@ -1,4 +1,6 @@
-﻿class Program
+﻿using TaskTracker;
+
+class Program
 {
     private static readonly TaskManager _taskManager = new();
 
@@ -104,18 +106,18 @@
         }
     }
 
-    private static TaskStatus? ParseStatus(string status)
+    private static TaskTracker.TaskStatus? ParseStatus(string status)
     {
         return status.ToLower() switch
         {
-            "todo" => TaskStatus.Todo,
-            "in-progress" => TaskStatus.InProgress,
-            "done" => TaskStatus.Done,
+            "todo" => TaskTracker.TaskStatus.Todo,
+            "in-progress" => TaskTracker.TaskStatus.InProgress,
+            "done" => TaskTracker.TaskStatus.Done,
             _ => null
         };
     }
 
-    private static void PrintTasks(IEnumerable<Task> tasks)
+    private static void PrintTasks(IEnumerable<TaskTracker.Task> tasks)
     {
         var taskList = tasks.ToList();
         if (taskList.Count == 0)

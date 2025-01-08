@@ -1,11 +1,13 @@
-enum TaskStatus
+namespace TaskTracker;
+
+public enum TaskStatus
 {
     Todo,
     InProgress,
     Done
 }
 
-class Task
+public class Task
 {
     public Guid Id { get; set; }
     public string Description { get; set; } = "";
