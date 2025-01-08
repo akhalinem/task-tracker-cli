@@ -27,45 +27,76 @@
         switch (command)
         {
             case "add" when args.Length >= 2:
-                var description = string.Join(" ", args.Skip(1));
-                var newTask = _taskManager.AddTask(description);
+                {
+                    var description = string.Join(" ", args.Skip(1));
+                    var newTask = _taskManager.AddTask(description);
 
-                Console.WriteLine($"Task added successfully (ID: {newTask.Id})");
+                    Console.WriteLine($"Task added successfully (ID: {newTask.Id})");
 
-                break;
+                    break;
+                }
 
             case "remove" when args.Length == 2:
-                if (!Guid.TryParse(args[1], out var id))
                 {
-                    Console.WriteLine("Invalid task ID.");
-                    return;
+                    if (!Guid.TryParse(args[1], out var id))
+                    {
+                        Console.WriteLine("Invalid task ID.");
+                        return;
+                    }
+
+                    var deleted = _taskManager.RemoveTask(id);
+                    Console.WriteLine(deleted ? "Task deleted successfully" : "Task not found");
+
+                    break;
                 }
-
-                var deleted = _taskManager.RemoveTask(id);
-                Console.WriteLine(deleted ? "Task deleted successfully" : "Task not found");
-
-                break;
 
             case "update" when args.Length >= 3:
-                if (!Guid.TryParse(args[1], out var taskId))
                 {
-                    Console.WriteLine("Invalid task ID");
-                    return;
+                    if (!Guid.TryParse(args[1], out var taskId))
+                    {
+                        Console.WriteLine("Invalid task ID");
+                        return;
+                    }
+
+                    var updateDescription = string.Join(" ", args.Skip(2));
+                    var updatedTask = _taskManager.UpdateTask(taskId, updateDescription);
+                    Console.WriteLine(updatedTask != null ? "Task updated successfully" : "Task not found");
+
+                    break;
                 }
 
-                var updateDescription = string.Join(" ", args.Skip(2));
-                var updatedTask = _taskManager.UpdateTask(taskId, updateDescription);
-                Console.WriteLine(updatedTask != null ? "Task updated successfully" : "Task not found");
+            case "mark" when args.Length == 3:
+                {
+                    if (!Guid.TryParse(args[1], out var taskId))
+                    {
+                        Console.WriteLine("Invalid task ID");
+                        return;
+                    }
 
-                break;
+                    var status = ParseStatus(args[2]);
+
+                    if (status == null)
+                    {
+                        Console.WriteLine("Invalid status. Use todo, in-progress, or done.");
+                        return;
+                    }
+
+                    var markedTask = _taskManager.MarkTaskStatus(taskId, status.Value);
+
+                    Console.WriteLine(markedTask != null ? "Task status updated successfully" : "Task not found");
+
+                    break;
+                }
 
             case "list":
-                var status = args.Length == 2 ? ParseStatus(args[1]) : null;
-                var tasks = _taskManager.GetTasks(status);
+                {
+                    var status = args.Length == 2 ? ParseStatus(args[1]) : null;
+                    var tasks = _taskManager.GetTasks(status);
 
-                PrintTasks(tasks);
+                    PrintTasks(tasks);
 
-                break;
+                    break;
+                }
 
             default:
                 Console.WriteLine("Invalid command.");
@@ -110,12 +141,15 @@
         Console.WriteLine("  add <description>              - Add a new task");
         Console.WriteLine("  update <id> <description>      - Update an existing task");
         Console.WriteLine("  delete <id>                    - Delete a task");
+        Console.WriteLine("  mark <id> <status>             - Mark task status (todo/in-progress/done)");
         Console.WriteLine("  list                           - List all tasks");
         Console.WriteLine("  list <status>                  - List tasks by status (todo/in-progress/done)");
         Console.WriteLine("\nExamples:");
         Console.WriteLine("  dotnet run -- add \"Buy groceries\"");
         Console.WriteLine("  dotnet run -- update 1 \"Buy groceries and cleaning supplies\"");
         Console.WriteLine("  dotnet run -- delete 1");
+        Console.WriteLine("  dotnet run -- mark 1 in-progress");
+        Console.WriteLine("  dotnet run -- mark 1 done");
         Console.WriteLine("  dotnet run -- list");
     }
 }

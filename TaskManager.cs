@@ -100,6 +100,19 @@ class TaskManager
         return task;
     }
 
+    public Task? MarkTaskStatus(Guid id, TaskStatus status)
+    {
+        var task = _tasks.FirstOrDefault(t => t.Id == id);
+        if (task == null) return null;
+
+        task.Status = status;
+        task.UpdatedAt = DateTime.Now;
+
+        SaveTasks();
+
+        return task;
+    }
+
     public List<Task> GetTasks(TaskStatus? status = null)
     {
         return status.HasValue

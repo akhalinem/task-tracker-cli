@@ -2,9 +2,9 @@
   {
     "Id": "ab156ae1-9da0-4c2c-ba5c-69591b1851e4",
     "Description": "Buy groceries",
-    "Status": 0,
+    "Status": 1,
     "CreatedAt": "2025-01-07T15:02:08.344417+05:00",
-    "UpdatedAt": null
+    "UpdatedAt": "2025-01-08T12:51:50.631985+05:00"
   },
   {
     "Id": "c9e3a7ba-e6c7-4655-89d9-6037168e43ae",
