@@ -1,6 +1,6 @@
 ﻿class Program
 {
-    private static readonly TaskManager.TaskManager _taskManager = new();
+    private static readonly TaskManager _taskManager = new();
 
     public static void Main(string[] args)
     {
@@ -104,18 +104,18 @@
         }
     }
 
-    private static TaskManager.TaskStatus? ParseStatus(string status)
+    private static TaskStatus? ParseStatus(string status)
     {
         return status.ToLower() switch
         {
-            "todo" => TaskManager.TaskStatus.Todo,
-            "in-progress" => TaskManager.TaskStatus.InProgress,
-            "done" => TaskManager.TaskStatus.Done,
+            "todo" => TaskStatus.Todo,
+            "in-progress" => TaskStatus.InProgress,
+            "done" => TaskStatus.Done,
             _ => null
         };
     }
 
-    private static void PrintTasks(IEnumerable<TaskManager.Task> tasks)
+    private static void PrintTasks(IEnumerable<Task> tasks)
     {
         var taskList = tasks.ToList();
         if (taskList.Count == 0)

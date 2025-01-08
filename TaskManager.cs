@@ -1,7 +1,5 @@
 using System.Text.Json;
 
-namespace TaskManager;
-
 enum TaskStatus
 {
     Todo,
