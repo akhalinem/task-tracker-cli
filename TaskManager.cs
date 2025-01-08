@@ -82,6 +82,7 @@ class TaskManager
         if (task == null) return false;
 
         _tasks.Remove(task);
+        SaveTasks();
 
         return true;
     }
@@ -93,6 +94,9 @@ class TaskManager
 
         task.Description = description;
         task.UpdatedAt = DateTime.UtcNow;
+
+        SaveTasks();
+
         return task;
     }
 

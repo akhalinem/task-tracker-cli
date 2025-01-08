@@ -34,12 +34,29 @@
 
                 break;
 
-            case "remove":
-                // TODO: Implement
+            case "remove" when args.Length == 2:
+                if (!Guid.TryParse(args[1], out var id))
+                {
+                    Console.WriteLine("Invalid task ID.");
+                    return;
+                }
+
+                var deleted = _taskManager.RemoveTask(id);
+                Console.WriteLine(deleted ? "Task deleted successfully" : "Task not found");
+
                 break;
 
-            case "update":
-                // TODO: Implement
+            case "update" when args.Length >= 3:
+                if (!Guid.TryParse(args[1], out var taskId))
+                {
+                    Console.WriteLine("Invalid task ID");
+                    return;
+                }
+
+                var updateDescription = string.Join(" ", args.Skip(2));
+                var updatedTask = _taskManager.UpdateTask(taskId, updateDescription);
+                Console.WriteLine(updatedTask != null ? "Task updated successfully" : "Task not found");
+
                 break;
 
             case "list":
@@ -90,11 +107,15 @@
     private static void PrintUsage()
     {
         Console.WriteLine("Task Tracker CLI - Usage:");
-        Console.WriteLine("  add <description>            - Add a new task");
-        Console.WriteLine("  list                         - List all tasks");
-        Console.WriteLine("  list <status>                - List tasks by status (todo/in-progress/done)");
+        Console.WriteLine("  add <description>              - Add a new task");
+        Console.WriteLine("  update <id> <description>      - Update an existing task");
+        Console.WriteLine("  delete <id>                    - Delete a task");
+        Console.WriteLine("  list                           - List all tasks");
+        Console.WriteLine("  list <status>                  - List tasks by status (todo/in-progress/done)");
         Console.WriteLine("\nExamples:");
         Console.WriteLine("  dotnet run -- add \"Buy groceries\"");
+        Console.WriteLine("  dotnet run -- update 1 \"Buy groceries and cleaning supplies\"");
+        Console.WriteLine("  dotnet run -- delete 1");
         Console.WriteLine("  dotnet run -- list");
     }
 }
