@@ -2,6 +2,8 @@
 
 A simple command-line task management application built with .NET 9.0 that allows you to create, update, delete, and track tasks with different statuses.
 
+> This project is based on the [Task Tracker CLI project](https://roadmap.sh/projects/task-tracker) from roadmap.sh
+
 ## Features
 
 - Add new tasks
@@ -81,3 +83,4 @@ To run the tests, use the following command:
 ```bash
 dotnet test
 ```
+
